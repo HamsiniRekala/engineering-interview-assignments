@@ -145,7 +145,19 @@ STEP BY STEP APPROACH OF BUILDING THE CODE
   -This will validate data processing , merging and JSON output.
 
 # Submission
+-Commit and pushed my code i.e changes to my personal repository
+   -git add.
+    This ensures that all files in the directory are added to the staging area
 
+   -git commit -m "Completed assignment"
+    Commit the changes
+
+   -git push -u submission main
+   Pushing the changes to reomte repository
+
+   -git remote -v
+   making sure submission is correctly set as a remote .
+   
 # Deploying the solution to cloud provider
  - have chose Azure for its robust, scalable, and cost-effective cloud solutions, which are ideal for handling the data pipeline, providing seamless integration with storage, serverless functions, and scalable compute resources.
 
