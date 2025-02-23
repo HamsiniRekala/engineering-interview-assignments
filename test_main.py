@@ -24,6 +24,7 @@ results_sample = pd.DataFrame({
     "fastestLapTime": ["1:32.5", "1:31.8"]
 })
 
+#Unit tests for validating the functions in main.py
 # ---------- 1. Mocking Test: Loading CSV File ----------
 @patch("pandas.read_csv")
 def test_load_csv(mock_read_csv):
