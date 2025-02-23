@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Solution README
 # Solution Documentation
 
@@ -211,3 +212,6 @@ The solution fulfills the following core requirements:
 
 
 
+=======
+# engineering-interview-assignments
+>>>>>>> submission/main
