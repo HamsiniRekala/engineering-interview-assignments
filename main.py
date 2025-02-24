@@ -2,14 +2,17 @@ import pandas as pd
 import json
 import os
 import logging
-from typing import Optional
+
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
-## Define file paths
+## Define file paths for source and destitnation files.
+
+# Source files
 RACES_FILE = "/Users/hamsinirekala/Documents/GitHub/engineering-recruitment-assignments/data-engineering/datapipeline/source-data/races.csv"
 RESULTS_FILE = "/Users/hamsinirekala/Documents/GitHub/engineering-recruitment-assignments/data-engineering/datapipeline/source-data/results.csv"
+# Destination files
 OUTPUT_FOLDER = "/Users/hamsinirekala/Documents/GitHub/engineering-recruitment-assignments/data-engineering/datapipeline/results"
 
 
@@ -61,7 +64,7 @@ def preprocess_results_data(results_df: pd.DataFrame) -> pd.DataFrame:
 def merge_data(races_df: pd.DataFrame, results_df: pd.DataFrame) -> pd.DataFrame:
     """Merge races with winners and fastest lap times."""
 
-    # Combine 'date' and 'time' into a single 'Race Datetime' column in ISO 8601 format
+    #  defining  winners_df by filtering the winner's details adn other required columns for that race
     winners_df = results_df[results_df["position"] == 1][["raceId", "driverId", "fastestLapTime"]]
 
     # Merge race data with the winners' data using 'raceId'
@@ -111,18 +114,24 @@ def save_json(merged_df: pd.DataFrame, output_folder: str) -> None:
 if __name__ == "__main__":
     races_df = load_csv(RACES_FILE)
     results_df = load_csv(RESULTS_FILE)
+    # ✅ Check if both DataFrames are non-empty before proceeding
+    if races_df.empty:
+        logging.error("Races CSV file is empty or could not be loaded. Exiting.")
+        exit(1)  # Stops the script with an error code
 
-# Check if both dataframes are non-empty before proceeding
-    if not races_df.empty and not results_df.empty:
-        # Preprocess the data (cleaning and formatting)
+    if results_df.empty:
+        logging.error("Results CSV file is empty or could not be loaded. Exiting.")
+        exit(1)
+
+    # Preprocess the data (cleaning and formatting)
         races_df = preprocess_race_data(races_df)
         results_df = preprocess_results_data(results_df)
 
- # Merge the race and results data
+   # Merge the race and results data
         merged_df = merge_data(races_df, results_df)
 
    # Save the merged data to JSON files     
         save_json(merged_df, OUTPUT_FOLDER)
 
-# Log successful completion of the process
+   # Log successful completion of the process
         logging.info("JSON files successfully generated!")

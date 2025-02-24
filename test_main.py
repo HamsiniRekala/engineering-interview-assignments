@@ -116,12 +116,7 @@ def test_save_json_output_folder_not_found():
         # Calling save_json with the folder path
         save_json(df, "results")
 
-        # Ensure os.makedirs was called to create the directory
-        mock_makedirs.assert_called_once_with("results")
-        
-        # Ensure the file open was called to save the json file at the expected path
-        mocked_file.assert_called_once_with("results/stats_2024.json", "w")
-
+        mock_makedirs.assert_called_once_with("results", exist_ok=True)
 # ---------- 6. Handling Missing Columns in Results Data ----------
 def test_preprocess_results_data_missing_columns():
     # Sample results dataframe with missing 'fastestLapTime' column

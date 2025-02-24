@@ -87,7 +87,7 @@ STEP BY STEP APPROACH OF BUILDING THE CODE
 
 - Each JSON file is named stats_{year}.json and is saved in the OUTPUT_FOLDER.
 
-6.The main script provided at the end calls the functions for loading the files, preprocessing the data, merging and saving the final merged files.
+6.The main script provided at the end calls the functions for loading the files, it handles empty dataframes ,if loading an empty csv files return an empty dataframe , the execution gets stopped and then preprocessing the data, merging and saving the final merged files.
 
 # Running the pipeline
  1. Prepare your input data .(races.csv and results.csv)
@@ -121,17 +121,20 @@ STEP BY STEP APPROACH OF BUILDING THE CODE
  -Have implemented unit tests for the fucntions to improve code quality, ensure that pipelines behaves correctly acroass a variety of edge cases , making the system more robust and reliable.
 
   1.Mocking and Data loading :test_load_csv
-  -Purpose:This test ensures that the load_csv function correctly loads a CSV file into a DataFrame.
-  - The patch decorator is used to mock the pandas.read_csv method. This allows you to simulate the behavior of reading a CSV file without actually accessing any files.
-  -It verifies that the load_csv function returns the expected DataFrame (races_sample).
+
+   -Purpose:This test ensures that the load_csv function correctly loads a CSV file into a DataFrame.
+
+   - The patch decorator is used to mock the pandas.read_csv method. This allows you to simulate the behavior of reading a CSV file without actually accessing any files.
+
+   -It verifies that the load_csv function returns the expected DataFrame (races_sample).
   
   2.Edge Case Test :test_missing_race_data
 
-  -Purpose: This test validates that missing race times are correctly handled by the    preprocess_race_data function.
+   -Purpose: This test validates that missing race times are correctly handled by the    preprocess_race_data function.
 
-  -How it works: A DataFrame (invalid_race_data) with missing times (represented as None) is passed to the preprocess_race_data function.
+   -How it works: A DataFrame (invalid_race_data) with missing times (represented as None) is passed to the preprocess_race_data function.
 
-  -What it checks:
+   -What it checks:
     -It asserts that missing values in the time column are replaced with "00:00:00".
     -It also verifies that existing times are not modified, ensuring that the function only fills missing values.
 
@@ -140,7 +143,9 @@ STEP BY STEP APPROACH OF BUILDING THE CODE
 
    -Purpose: This test ensures that missing driverId values in the results data are handled properly by the preprocess_results_data function.
 
+
    -How it works: A DataFrame (invalid_results_data) with a missing driverId value is passed to preprocess_results_data.
+
 
    -What it checks:
       -It asserts that missing driverId values are replaced with -1.
